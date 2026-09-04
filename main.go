@@ -44,12 +44,13 @@ func handleGoodbye(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// handleHelloParameterized for taking parameter from URL and writing it on the website page
 func handleHelloParameterized(w http.ResponseWriter, r *http.Request) {
-	params := r.URL.Query()
-	userList := params["user"]
+	params := r.URL.Query()    //taking parameters from URL
+	userList := params["user"] //taking parameter with name "user"
 
 	username := "User"
-	if len(userList) > 0 {
+	if len(userList) > 0 { //if this user parameter and its value exist we use it, else use "User".
 		username = userList[0]
 	}
 
@@ -97,8 +98,9 @@ func handleJSON(w http.ResponseWriter, r *http.Request) {
 	handleHello(w, reqData.Name)
 }
 
+// handleHello that write Hello and user nickname on the site
 func handleHello(w http.ResponseWriter, username string) {
-	var output bytes.Buffer
+	var output bytes.Buffer //buffer save strings
 	output.WriteString("Hello, ")
 	output.WriteString(username)
 	output.WriteString("!\n")

@@ -46,11 +46,11 @@ func TestHandleGoodbye(t *testing.T) {
 }
 
 func TestHandleHelloParameterized(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/hello?user=TestMan", nil)
+	req := httptest.NewRequest(http.MethodGet, "/hello?user=TestMan", nil) //create request with method get and URL with parameter
 
 	w := httptest.NewRecorder()
 
-	handleHelloParameterized(w, req)
+	handleHelloParameterized(w, req) // put responsewriter and request
 
 	desiredCode := http.StatusOK
 	if w.Code != desiredCode {
