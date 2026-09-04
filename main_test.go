@@ -9,19 +9,19 @@ import (
 )
 
 func TestHandleRoot(t *testing.T) {
-	w := httptest.NewRecorder()
+	w := httptest.NewRecorder() //создает responsewriter для тестов
 
-	handleRoot(w, nil)
+	handleRoot(w, nil) // запускаем функцию
 
 	desiredCode := http.StatusOK
 
-	if w.Code != desiredCode {
+	if w.Code != desiredCode { // проверяем чтобы статус возвращаелся таким, что все работает
 		t.Errorf("bad response code, expected %v but got %v\nbode: %s\n",
 			desiredCode, w.Code, w.Body.String())
 	}
 
 	expectedMessage := []byte("Welcome to our homepage!\n")
-	if !bytes.Equal(expectedMessage, w.Body.Bytes()) {
+	if !bytes.Equal(expectedMessage, w.Body.Bytes()) { // также проверяем чтобы текст на сайте соответствовал тому, что мы отправляли
 		t.Errorf("bad return, got: %q, expected %q", w.Body.String(), expectedMessage)
 	}
 }

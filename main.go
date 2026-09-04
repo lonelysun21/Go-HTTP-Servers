@@ -13,16 +13,35 @@ type UserData struct {
 }
 
 func main() {
-	mux := http.NewServeMux()
+	mux := http.NewServeMux() //Наш маршрутизатор, в котором мы храним нашу маршруты (адрес и его функцию)
 
-	mux.HandleFunc("/{$}", handleRoot)
+	mux.HandleFunc("/{$}", handleRoot) //Наши маршруты в которых хранятся адреса и их функции
 	mux.HandleFunc("/goodbye", handleGoodbye)
 	mux.HandleFunc("/hello/", handleHelloParameterized)
 	mux.HandleFunc("/responses/{user}/hello/", handleUserResponsesHello)
 	mux.HandleFunc("/user/hello/", handleHelloHeader)
 	mux.HandleFunc("/json/", handleJSON)
 
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":8080", mux) // Нужен чтобы подключиться к серверу, запустить его как бесконечный цикл и принять маршрутизатор который отправиться на сервер
+}
+
+// handleRoot for homepage with message Welcome
+func handleRoot(w http.ResponseWriter, r *http.Request) { // в каждом хэндлере у нас всегда 2 параметра, w and r,
+	// в котором в w у нас храниться то что мы будем отправлять на страничку, а в r то что мы имеем и можем использовать со странички (body, code and etc)
+	_, err := w.Write([]byte("Welcome to our homepage!\n")) // Функция w.write принимает слайс байтов и нужно чтобы писать текст на страничке.
+	if err != nil {
+		slog.Error("Error writing responce", "err", err)
+		return
+	}
+}
+
+// handleGoodbye for Goodbye message
+func handleGoodbye(w http.ResponseWriter, r *http.Request) {
+	_, err := w.Write([]byte("Goodbye!\n"))
+	if err != nil {
+		slog.Error("Error writing responce", "err", err)
+		return
+	}
 }
 
 func handleHelloParameterized(w http.ResponseWriter, r *http.Request) {
@@ -35,22 +54,6 @@ func handleHelloParameterized(w http.ResponseWriter, r *http.Request) {
 	}
 
 	handleHello(w, username)
-}
-
-func handleRoot(w http.ResponseWriter, r *http.Request) {
-	_, err := w.Write([]byte("Welcome to our homepage!\n"))
-	if err != nil {
-		slog.Error("Error writing responce", "err", err)
-		return
-	}
-}
-
-func handleGoodbye(w http.ResponseWriter, r *http.Request) {
-	_, err := w.Write([]byte("Goodbye!\n"))
-	if err != nil {
-		slog.Error("Error writing responce", "err", err)
-		return
-	}
 }
 
 func handleUserResponsesHello(w http.ResponseWriter, r *http.Request) {
