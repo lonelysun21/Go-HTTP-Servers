@@ -75,6 +75,7 @@ func handleHelloHeader(w http.ResponseWriter, r *http.Request) {
 	handleHello(w, username)
 }
 
+// handleJSON for working with JSON files
 func handleJSON(w http.ResponseWriter, r *http.Request) {
 	byteData, err := io.ReadAll(r.Body)
 	if err != nil || len(byteData) < 1 {
