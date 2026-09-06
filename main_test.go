@@ -107,7 +107,7 @@ func TestHandleParameterizedWrongParameter(t *testing.T) {
 
 func TestHandleUserResponsesHello(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/responses/Testman/hello/", nil)
-	req.SetPathValue("user", "Testman")
+	req.SetPathValue("user", "Testman") // set url variable "user" with value "Testman"
 
 	w := httptest.NewRecorder()
 
@@ -127,7 +127,7 @@ func TestHandleUserResponsesHello(t *testing.T) {
 
 func TestHandleHelloHeader(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/user/hello", nil)
-	req.Header.Set("user", "Test Man")
+	req.Header.Set("user", "Test Man") //set header
 
 	w := httptest.NewRecorder()
 

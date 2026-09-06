@@ -57,14 +57,16 @@ func handleHelloParameterized(w http.ResponseWriter, r *http.Request) {
 	handleHello(w, username)
 }
 
+// handle UserResponsesHello for working with url variables
 func handleUserResponsesHello(w http.ResponseWriter, r *http.Request) {
-	username := r.PathValue("user")
+	username := r.PathValue("user") //taking url variable with name "user"
 
 	handleHello(w, username)
 }
 
+// handleHelloHeader for working with headers
 func handleHelloHeader(w http.ResponseWriter, r *http.Request) {
-	username := r.Header.Get("user")
+	username := r.Header.Get("user") // taking value from header with key "user"
 	if username == "" {
 		http.Error(w, "invalid username provided", http.StatusBadRequest)
 		return
